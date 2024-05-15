@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=3 uid="uid://dvkynlg8b2xoq"]
+[gd_scene load_steps=67 format=3 uid="uid://dvkynlg8b2xoq"]
 
 [ext_resource type="Texture2D" uid="uid://dklvgpvb0g4gj" path="res://Assets/Sprites/Characters/Player/Idle Blinking/Idle Blinking_000.png" id="1_8eji6"]
 [ext_resource type="Script" path="res://Scripts/Player/player_node.cs" id="1_avqrn"]
@@ -64,9 +64,60 @@
 [ext_resource type="Texture2D" uid="uid://bgj6jw5q0hudd" path="res://Assets/Sprites/Characters/Player/Sliding/Sliding_003.png" id="61_y4jm5"]
 [ext_resource type="Texture2D" uid="uid://c250jycetcjo4" path="res://Assets/Sprites/Characters/Player/Sliding/Sliding_004.png" id="62_iubve"]
 [ext_resource type="Texture2D" uid="uid://b7vwkotsmjqcq" path="res://Assets/Sprites/Characters/Player/Sliding/Sliding_005.png" id="63_dhd2r"]
+[ext_resource type="Script" path="res://Scripts/Player/PlayerIdleNode.cs" id="65_gyp4u"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_pa2qp"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("19_41jnu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_0qgc8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_onkcb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_y8sya")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_i5eka")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_c3u4x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_d2ctx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_h7cdj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_pvx1d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_gnpg0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_5msdg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_tyx5y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_4veh6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_utcld")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_p3ykm")
+}],
+"loop": true,
+"name": &"dying",
+"speed": 15.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("1_8eji6")
@@ -123,57 +174,7 @@ animations = [{
 "texture": ExtResource("18_c7pqw")
 }],
 "loop": true,
-"name": &"blinking",
-"speed": 15.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("19_41jnu")
-}, {
-"duration": 1.0,
-"texture": ExtResource("20_0qgc8")
-}, {
-"duration": 1.0,
-"texture": ExtResource("21_onkcb")
-}, {
-"duration": 1.0,
-"texture": ExtResource("22_y8sya")
-}, {
-"duration": 1.0,
-"texture": ExtResource("23_i5eka")
-}, {
-"duration": 1.0,
-"texture": ExtResource("24_c3u4x")
-}, {
-"duration": 1.0,
-"texture": ExtResource("25_d2ctx")
-}, {
-"duration": 1.0,
-"texture": ExtResource("26_h7cdj")
-}, {
-"duration": 1.0,
-"texture": ExtResource("27_pvx1d")
-}, {
-"duration": 1.0,
-"texture": ExtResource("28_gnpg0")
-}, {
-"duration": 1.0,
-"texture": ExtResource("29_5msdg")
-}, {
-"duration": 1.0,
-"texture": ExtResource("30_tyx5y")
-}, {
-"duration": 1.0,
-"texture": ExtResource("31_4veh6")
-}, {
-"duration": 1.0,
-"texture": ExtResource("32_utcld")
-}, {
-"duration": 1.0,
-"texture": ExtResource("33_p3ykm")
-}],
-"loop": true,
-"name": &"dying",
+"name": &"idle",
 "speed": 15.0
 }, {
 "frames": [{
@@ -282,11 +283,15 @@ animations = [{
 "speed": 15.0
 }]
 
-[node name="playerNode" type="CharacterBody3D"]
+[node name="playerNode" type="CharacterBody3D" node_paths=PackedStringArray("PlayerSpriteNode")]
 script = ExtResource("1_avqrn")
+PlayerSpriteNode = NodePath("playerAnimations")
 
 [node name="playerAnimations" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0901362, -0.41953, -0.288632)
+texture_filter = 0
 sprite_frames = SubResource("SpriteFrames_pa2qp")
-animation = &"blinking"
-frame = 12
-frame_progress = 0.574181
+animation = &"dying"
+
+[node name="PlayerIdleNode" type="Node" parent="."]
+script = ExtResource("65_gyp4u")
