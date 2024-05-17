@@ -1,7 +1,7 @@
-[gd_scene load_steps=67 format=3 uid="uid://dvkynlg8b2xoq"]
+[gd_scene load_steps=70 format=3 uid="uid://dvkynlg8b2xoq"]
 
+[ext_resource type="Script" path="res://Scripts/Player/Player.cs" id="1_00quu"]
 [ext_resource type="Texture2D" uid="uid://dklvgpvb0g4gj" path="res://Assets/Sprites/Characters/Player/Idle Blinking/Idle Blinking_000.png" id="1_8eji6"]
-[ext_resource type="Script" path="res://Scripts/Player/player_node.cs" id="1_avqrn"]
 [ext_resource type="Texture2D" uid="uid://xvjggc2ppuhm" path="res://Assets/Sprites/Characters/Player/Idle Blinking/Idle Blinking_001.png" id="2_mint1"]
 [ext_resource type="Texture2D" uid="uid://7o3s4kmecrp" path="res://Assets/Sprites/Characters/Player/Idle Blinking/Idle Blinking_002.png" id="3_242dy"]
 [ext_resource type="Texture2D" uid="uid://b7fng7bxkl5jv" path="res://Assets/Sprites/Characters/Player/Idle Blinking/Idle Blinking_003.png" id="4_h4e5y"]
@@ -64,7 +64,9 @@
 [ext_resource type="Texture2D" uid="uid://bgj6jw5q0hudd" path="res://Assets/Sprites/Characters/Player/Sliding/Sliding_003.png" id="61_y4jm5"]
 [ext_resource type="Texture2D" uid="uid://c250jycetcjo4" path="res://Assets/Sprites/Characters/Player/Sliding/Sliding_004.png" id="62_iubve"]
 [ext_resource type="Texture2D" uid="uid://b7vwkotsmjqcq" path="res://Assets/Sprites/Characters/Player/Sliding/Sliding_005.png" id="63_dhd2r"]
+[ext_resource type="Script" path="res://Scripts/Player/StateMachine.cs" id="65_4q70y"]
 [ext_resource type="Script" path="res://Scripts/Player/PlayerIdleNode.cs" id="65_gyp4u"]
+[ext_resource type="Script" path="res://Scripts/Player/PlayerMoveNode.cs" id="66_d0jax"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_pa2qp"]
 animations = [{
@@ -283,15 +285,30 @@ animations = [{
 "speed": 15.0
 }]
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hajh7"]
+radius = 2.07733
+height = 5.81686
+
 [node name="playerNode" type="CharacterBody3D" node_paths=PackedStringArray("PlayerSpriteNode")]
-script = ExtResource("1_avqrn")
+script = ExtResource("1_00quu")
 PlayerSpriteNode = NodePath("playerAnimations")
 
 [node name="playerAnimations" type="AnimatedSprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0901362, -0.41953, -0.288632)
 texture_filter = 0
 sprite_frames = SubResource("SpriteFrames_pa2qp")
-animation = &"dying"
+animation = &"idle"
 
-[node name="PlayerIdleNode" type="Node" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.282185, 0)
+shape = SubResource("CapsuleShape3D_hajh7")
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource("65_4q70y")
+InitialState = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine"]
 script = ExtResource("65_gyp4u")
+
+[node name="Move" type="Node" parent="StateMachine"]
+script = ExtResource("66_d0jax")
