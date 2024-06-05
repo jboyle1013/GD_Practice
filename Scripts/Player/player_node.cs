@@ -8,7 +8,8 @@ public partial class player_node : CharacterBody3D
 	
 	public const float Speed = 5.0f;
 	public const float JumpVelocity = 4.5f;
-	
+	public Vector3 direction = new();
+	[Export] public StateMachine stateMachineNode;
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
 

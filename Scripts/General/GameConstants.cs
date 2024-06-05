@@ -23,4 +23,11 @@ public class GameConstants
         public static readonly StringName MoveDown = new("ui_down");
     }
 
+    public static class Notifications
+    {
+        // Notifications
+        public static readonly int NOTIFICATION_ENTER_STATE = 5001;
+        public static readonly int NOTIFICATION_EXIT_STATE = 5002;
+
+    }
 }
