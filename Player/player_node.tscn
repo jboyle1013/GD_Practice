@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=3 uid="uid://dvkynlg8b2xoq"]
+[gd_scene load_steps=72 format=3 uid="uid://dvkynlg8b2xoq"]
 
 [ext_resource type="Script" path="res://Scripts/Player/Player.cs" id="1_00quu"]
 [ext_resource type="Texture2D" uid="uid://dklvgpvb0g4gj" path="res://Assets/Sprites/Characters/Player/Idle Blinking/Idle Blinking_000.png" id="1_8eji6"]
@@ -64,9 +64,11 @@
 [ext_resource type="Texture2D" uid="uid://bgj6jw5q0hudd" path="res://Assets/Sprites/Characters/Player/Sliding/Sliding_003.png" id="61_y4jm5"]
 [ext_resource type="Texture2D" uid="uid://c250jycetcjo4" path="res://Assets/Sprites/Characters/Player/Sliding/Sliding_004.png" id="62_iubve"]
 [ext_resource type="Texture2D" uid="uid://b7vwkotsmjqcq" path="res://Assets/Sprites/Characters/Player/Sliding/Sliding_005.png" id="63_dhd2r"]
-[ext_resource type="Script" path="res://Scripts/Player/StateMachine.cs" id="65_4q70y"]
-[ext_resource type="Script" path="res://Scripts/Player/PlayerIdleNode.cs" id="65_gyp4u"]
-[ext_resource type="Script" path="res://Scripts/Player/PlayerMoveNode.cs" id="66_d0jax"]
+[ext_resource type="PackedScene" uid="uid://c4vf5idmo7wa4" path="res://StateMachine/state_machine.tscn" id="65_h6yy7"]
+[ext_resource type="Script" path="res://Scripts/Player/PlayerIdleState.cs" id="66_ja7tb"]
+[ext_resource type="Script" path="res://Scripts/Player/PlayerMoveState.cs" id="67_82p60"]
+[ext_resource type="Script" path="res://Scripts/Player/PlayerDashState.cs" id="68_he6yy"]
+[ext_resource type="Script" path="res://Scripts/Player/PlayerJumpState.cs" id="69_1d1t4"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_pa2qp"]
 animations = [{
@@ -280,35 +282,59 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("63_dhd2r")
 }],
-"loop": true,
+"loop": false,
 "name": &"sliding",
 "speed": 15.0
 }]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hajh7"]
-radius = 2.07733
-height = 5.81686
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3l4t0"]
+height = 1.5798
 
-[node name="playerNode" type="CharacterBody3D" node_paths=PackedStringArray("PlayerSpriteNode")]
+[node name="playerNode" type="CharacterBody3D" node_paths=PackedStringArray("SpriteNode", "_stateMachine")]
+collision_layer = 2
+floor_max_angle = 1.55334
+floor_snap_length = 0.2
 script = ExtResource("1_00quu")
-PlayerSpriteNode = NodePath("playerAnimations")
+SpriteNode = NodePath("playerAnimations")
+_stateMachine = NodePath("StateMachine")
 
 [node name="playerAnimations" type="AnimatedSprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0901362, -0.41953, -0.288632)
+pixel_size = 0.0025
 texture_filter = 0
 sprite_frames = SubResource("SpriteFrames_pa2qp")
 animation = &"idle"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.282185, 0)
-shape = SubResource("CapsuleShape3D_hajh7")
-
-[node name="StateMachine" type="Node" parent="."]
-script = ExtResource("65_4q70y")
+[node name="StateMachine" parent="." instance=ExtResource("65_h6yy7")]
 InitialState = NodePath("Idle")
 
-[node name="Idle" type="Node" parent="StateMachine"]
-script = ExtResource("65_gyp4u")
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("dashReloadNode")]
+script = ExtResource("66_ja7tb")
+dashReloadNode = NodePath("../Dash/DashReload")
 
-[node name="Move" type="Node" parent="StateMachine"]
-script = ExtResource("66_d0jax")
+[node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("dashReloadNode")]
+script = ExtResource("67_82p60")
+dashReloadNode = NodePath("../Dash/DashReload")
+
+[node name="Dash" type="Node" parent="StateMachine" node_paths=PackedStringArray("dashTimerNode", "dashReloadNode")]
+script = ExtResource("68_he6yy")
+dashTimerNode = NodePath("DashTimer")
+dashReloadNode = NodePath("DashReload")
+
+[node name="DashTimer" type="Timer" parent="StateMachine/Dash"]
+wait_time = 0.4
+one_shot = true
+
+[node name="DashReload" type="Timer" parent="StateMachine/Dash"]
+wait_time = 1.5
+one_shot = true
+
+[node name="Jump" type="Node" parent="StateMachine"]
+script = ExtResource("69_1d1t4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.310982, 0)
+shape = SubResource("CapsuleShape3D_3l4t0")
+
+[node name="LookTarget" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.546877, -0.401073, 0)
