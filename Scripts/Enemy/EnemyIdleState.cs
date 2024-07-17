@@ -1,11 +1,12 @@
 using Godot;
 using System;
+using GD_Practice.Scripts.Enemy;
 using GD_Practice.Scripts.General;
 using GD_Practice.Scripts.Player;
 using Godot.Collections;
 
 
-public partial class EnemyIdleState : CharacterState
+public partial class EnemyIdleState : EnemyState
 {	
 
 	// Called when the node enters the scene tree for the first time.
@@ -27,12 +28,11 @@ public partial class EnemyIdleState : CharacterState
 
 	public override void PhysicsUpdate(double delta)
 	{
-		if (Input.IsActionPressed(GameConstants.Input.MoveLeft) ||
-		    Input.IsActionPressed(GameConstants.Input.MoveRight) || Input.IsActionPressed(GameConstants.Input.MoveUp) ||
-		    Input.IsActionPressed(GameConstants.Input.MoveDown) || Input.IsActionPressed(GameConstants.Input.Jump))
+		if (!_character.AgentNode.IsNavigationFinished())
 		{
-			_stateMachine.TransitionTo("Move");
+			_stateMachine.TransitionTo("Return");
 		}
+		
 		// else if (Input.IsActionPressed(GameConstants.Input.Dash) && dashReloadNode.IsStopped())
 		// {
 		// 	_stateMachine.TransitionTo("Dash");

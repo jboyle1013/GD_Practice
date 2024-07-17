@@ -5,7 +5,7 @@ using GD_Practice.Scripts.Player;
 using Godot.Collections;
 
 
-public partial class PlayerIdleState : CharacterState
+public partial class PlayerIdleState : PlayerState
 {	
 	[Export] protected Timer dashReloadNode;
 
@@ -21,7 +21,6 @@ public partial class PlayerIdleState : CharacterState
 	public override void EnterState()
 	{
 		// We must declare all the properties we access through `owner` in the `Player.cs` script.
-		GD.Print("Idle Enter");
 		_character.SpriteNode.Play(GameConstants.Animation.AnimIdle);
 
 	}

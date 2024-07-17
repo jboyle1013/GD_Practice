@@ -1,11 +1,12 @@
 using Godot;
 using System.Collections.Generic;
 using GD_Practice.Scripts.General;
+using GD_Practice.Scripts.Player;
 
 /// <summary>
 /// The PlayerMoveState class represents the state of the player when they are moving.
 /// </summary>
-public partial class PlayerMoveState : CharacterState
+public partial class PlayerMoveState : PlayerState
 {
     [Export] protected Timer dashReloadNode;
 

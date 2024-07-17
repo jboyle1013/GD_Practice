@@ -1,10 +1,11 @@
 ﻿using Godot;
 using GD_Practice.Scripts.General;
+using GD_Practice.Scripts.Player;
 
 /// <summary>
 /// Represents the state of a player when jumping.
 /// </summary>
-public partial class PlayerJumpState : CharacterState
+public partial class PlayerJumpState : PlayerState
 {
     /// <summary>
     /// Indicates whether the player has performed a double jump.

@@ -11,6 +11,7 @@ public partial class Character : CharacterBody3D
     
     [ExportGroup("AI Nodes")]
     [Export] public Path3D PathNode { get; private set; }
+    [Export] public NavigationAgent3D AgentNode { get; private set; }
     
     // Get the gravity from the project settings to be synced with RigidBody nodes.
     public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();

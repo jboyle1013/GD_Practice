@@ -1,7 +1,8 @@
 using Godot;
 using System.Collections.Generic;
+using GD_Practice.Scripts.Enemy;
 using GD_Practice.Scripts.General;
-public partial class EnemyMoveState : CharacterState
+public partial class EnemyMoveState : EnemyState
 {
 
     public override void PhysicsUpdate(double delta)

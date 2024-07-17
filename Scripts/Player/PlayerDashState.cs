@@ -7,7 +7,7 @@ using Godot.Collections;
 /// <summary>
 /// Represents the state when the player is dashing.
 /// </summary>
-public partial class PlayerDashState : CharacterState
+public partial class PlayerDashState : PlayerState
 {
     /// <summary>
     /// Represents the dash timer node in the PlayerDashState class.

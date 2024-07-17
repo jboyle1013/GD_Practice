@@ -1,28 +1,31 @@
 using Godot;
 using System.Collections.Generic;
+using GD_Practice.Scripts.Enemy;
 using GD_Practice.Scripts.General;
-public partial class EnemyReturnState : CharacterState
+public partial class EnemyReturnState : EnemyState
 {
-
-    private Vector3 destination;
-
+    
     public override void _Ready()
     {
         base._Ready();
-
-        Vector3 localPos = _character.PathNode.Curve
-            .GetPointPosition(0);
-        Vector3 globalPos = _character.PathNode.GlobalPosition;
-        destination = localPos + globalPos;
+        destination = GetPointGlobalPosition(0);
     }
 
     public override void EnterState()
     {
         _character.SpriteNode.Play(GameConstants.EnemyAnimation.AnimMoving);
-        _character.GlobalPosition = destination;
-        
+        _character.AgentNode.TargetPosition = destination;
     }
 
+    public override void PhysicsUpdate(double delta)
+    {
+        if (_character.AgentNode.IsNavigationFinished())
+        {
+            GD.Print("Reached Destination");
+            _stateMachine.TransitionTo("Idle");
+        }
+        Move();
+    }
 
 
 }

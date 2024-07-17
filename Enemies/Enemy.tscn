@@ -362,16 +362,23 @@ animations = [{
 radius = 2.47199
 height = 6.10212
 
-[node name="Enemy" type="CharacterBody3D" node_paths=PackedStringArray("SpriteNode", "_stateMachine")]
+[node name="Enemy" type="CharacterBody3D" node_paths=PackedStringArray("SpriteNode", "_stateMachine", "AgentNode")]
 transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
 floor_max_angle = 1.55334
 script = ExtResource("1_t7bf2")
 SpriteNode = NodePath("AnimatedSprite3D")
 _stateMachine = NodePath("StateMachine")
+AgentNode = NodePath("NavigationAgent3D")
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
 sprite_frames = SubResource("SpriteFrames_o58o2")
 animation = &"Hit"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_dt402")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+debug_enabled = true
 
 [node name="StateMachine" parent="." instance=ExtResource("83_xg773")]
 InitialState = NodePath("Return")
@@ -384,8 +391,3 @@ script = ExtResource("85_7x184")
 
 [node name="Return" type="Node" parent="StateMachine"]
 script = ExtResource("86_01i6v")
-
-[node name="LookTarget" type="Node3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("CapsuleShape3D_dt402")

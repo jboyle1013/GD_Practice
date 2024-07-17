@@ -1,10 +1,11 @@
 using Godot;
 using System;
+using GD_Practice.Scripts.Enemy;
 using GD_Practice.Scripts.General;
 using GD_Practice.Scripts.Player;
 using Godot.Collections;
 
-public partial class EnemyDashState : CharacterState
+public partial class EnemyDashState : EnemyState
 {
     [Export] protected Timer dashTImerNode;
 
