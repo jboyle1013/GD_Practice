@@ -64,7 +64,7 @@ public partial class PlayerDashState : PlayerState
         }
 
         _character.Velocity *= speed;
-        _character.SpriteNode.Play(GameConstants.Animation.AnimSliding);
+        _character._spriteAnimations.Play(GameConstants.Animation.AnimSliding);
         dashTimerNode.Start();
 
 

@@ -45,7 +45,7 @@ public partial class PlayerMoveState : PlayerState
 
         _character.Velocity = velocity;
         _character.MoveAndSlide();
-        _character.SpriteNode.Play(GameConstants.Animation.AnimMoving);
+        _character._spriteAnimations.Play(GameConstants.Animation.AnimMoving);
         _Flip();
 
         if (velocity == Vector3.Zero)

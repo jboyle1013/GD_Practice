@@ -22,7 +22,7 @@ public partial class EnemyIdleState : EnemyState
 	{
 		// We must declare all the properties we access through `owner` in the `Player.cs` script.
 		GD.Print("Idle Enter");
-		_character.SpriteNode.Play(GameConstants.EnemyAnimation.AnimIdle);
+		_character._spriteAnimations.Play(GameConstants.EnemyAnimation.AnimIdle);
 
 	}
 

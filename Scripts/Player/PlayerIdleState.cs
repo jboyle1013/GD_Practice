@@ -21,7 +21,7 @@ public partial class PlayerIdleState : PlayerState
 	public override void EnterState()
 	{
 		// We must declare all the properties we access through `owner` in the `Player.cs` script.
-		_character.SpriteNode.Play(GameConstants.Animation.AnimIdle);
+		_character._spriteAnimations.Play(GameConstants.Animation.AnimIdle);
 
 	}
 

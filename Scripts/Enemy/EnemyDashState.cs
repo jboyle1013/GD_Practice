@@ -42,7 +42,7 @@ public partial class EnemyDashState : EnemyState
         }
 
         _character.Velocity *= speed;
-        _character.SpriteNode.Play(GameConstants.Animation.AnimSliding);
+        _character._spriteAnimations.Play(GameConstants.Animation.AnimSliding);
         dashTImerNode.Start();
 
 

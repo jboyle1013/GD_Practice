@@ -4,7 +4,9 @@ namespace GD_Practice.Scripts.Character;
 public partial class Character : CharacterBody3D
 {
     [ExportGroup("Required Nodes")]
-    [Export] public AnimatedSprite3D SpriteNode { get; private set; }
+    [Export] public Sprite3D SpriteNode { get; private set; }
+    [Export] public AnimationPlayer _spriteAnimations { get; private set; }
+    // [Export] public AnimatedSprite3D SpriteNode { get; private set; }
     [Export] public StateMachine _stateMachine;
     [Export(PropertyHint.Range, "0,10,0.1")] public float Speed = 5.0f;
     [Export(PropertyHint.Range, "0,10,0.1")] public float JumpVelocity = 4.5f;
